@@ -17,17 +17,117 @@
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     
     <style>
-        .admin-sidebar {
-            width: 280px;
-            background: #090b09;
-            border-right: 1px solid var(--color-dark-border);
-            padding: 24px 20px;
+        /* Admin Layout Structure */
+        .admin-layout {
             display: flex;
-            flex-direction: column;
             min-height: 100vh;
+            width: 100%;
+            background: #050605;
+            position: relative;
+        }
+
+        /* Permanently Fixed/Sticky 280px Sidebar */
+        .admin-sidebar {
+            width: 280px !important;
+            min-width: 280px !important;
+            max-width: 280px !important;
+            flex: 0 0 280px !important;
+            background: #090b09 !important;
+            border-right: 1px solid var(--color-dark-border) !important;
+            padding: 24px 20px !important;
+            display: flex !important;
+            flex-direction: column !important;
+            height: 100vh !important;
+            position: sticky !important;
+            top: 0 !important;
+            left: 0 !important;
+            overflow-y: auto !important;
+            overflow-x: hidden !important;
+            z-index: 1000 !important;
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            box-sizing: border-box !important;
+        }
+
+        /* Mobile Backdrop Overlay */
+        .admin-sidebar-backdrop {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(4px);
+            z-index: 999;
+        }
+
+        /* Main Content Container */
+        .admin-main {
+            flex: 1 1 0% !important;
+            min-width: 0 !important;
+            max-width: 100% !important;
+            margin-left: 0 !important; /* Overrides style.css margin-left: 280px */
+            padding: 36px 40px !important;
+            background: #050605 !important;
+            min-height: 100vh !important;
+            overflow-x: hidden !important;
+            box-sizing: border-box !important;
+        }
+
+        /* Mobile Top Bar */
+        .admin-mobile-header {
+            display: none;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 20px;
+            background: #090b09;
+            border-bottom: 1px solid var(--color-dark-border);
             position: sticky;
             top: 0;
-            overflow-y: auto;
+            z-index: 900;
+        }
+
+        .mobile-close-btn {
+            display: none;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--color-dark-border);
+            color: var(--color-text-primary);
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            line-height: 1;
+        }
+
+        @media (max-width: 992px) {
+            .admin-layout {
+                flex-direction: column !important;
+            }
+            .admin-mobile-header {
+                display: flex !important;
+            }
+            .admin-sidebar {
+                position: fixed !important;
+                top: 0 !important;
+                left: 0 !important;
+                bottom: 0 !important;
+                height: 100vh !important;
+                transform: translateX(-100%);
+                box-shadow: 0 0 40px rgba(0,0,0,0.9) !important;
+            }
+            .admin-sidebar.open {
+                transform: translateX(0) !important;
+            }
+            .admin-sidebar-backdrop.active {
+                display: block !important;
+            }
+            .admin-main {
+                padding: 24px 16px !important;
+                width: 100% !important;
+            }
+            .mobile-close-btn {
+                display: flex !important;
+                align-items: center;
+                justify-content: center;
+            }
         }
         .admin-nav-item {
             display: flex;
@@ -132,19 +232,44 @@
     @stack('styles')
 </head>
 <body style="background: #050605; color: #f5f6f8;">
-    <div style="display: flex; min-height: 100vh;">
+    <!-- Mobile Top Header -->
+    <header class="admin-mobile-header">
+        <div style="display: flex; align-items: center; gap: 10px;">
+            <div style="width: 32px; height: 32px; border-radius: 8px; background: var(--color-secondary); display: flex; align-items: center; justify-content: center; font-family: var(--font-clash); font-weight: 700; color: #fff; font-size: 15px;">
+                Q
+            </div>
+            <div>
+                <div style="font-family: var(--font-clash); font-size: 18px; font-weight: 700; color: #fff; line-height: 1.1;">QAVIX</div>
+                <div style="font-size: 9px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-secondary-bright); font-weight: 700;">Control Panel</div>
+            </div>
+        </div>
+        <button type="button" onclick="toggleSidebar()" class="btn btn-secondary btn-sm" style="display: flex; align-items: center; gap: 8px; padding: 8px 14px; font-size: 13px; cursor: pointer; border-radius: 6px; background: rgba(255,255,255,0.06); border: 1px solid var(--color-dark-border); color: #fff;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="3" y1="12" x2="21" y2="12"></line>
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+            <span>Menu</span>
+        </button>
+    </header>
+
+    <!-- Mobile Drawer Backdrop -->
+    <div class="admin-sidebar-backdrop" onclick="closeSidebar()"></div>
+
+    <div class="admin-layout">
         <!-- Admin Sidebar -->
         <aside class="admin-sidebar">
-            <div style="margin-bottom: 28px;">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 28px;">
                 <a href="{{ route('admin.dashboard') }}" style="text-decoration: none; display: flex; align-items: center; gap: 10px;">
-                    <div style="width: 36px; height: 36px; border-radius: 8px; background: var(--color-secondary); display: flex; align-items: center; justify-content: center; font-family: var(--font-clash); font-weight: 700; color: #fff;">
+                    <div style="width: 36px; height: 36px; border-radius: 8px; background: var(--color-secondary); display: flex; align-items: center; justify-content: center; font-family: var(--font-clash); font-weight: 700; color: #fff; flex-shrink: 0;">
                         Q
                     </div>
                     <div>
-                        <div style="font-family: var(--font-clash); font-size: 20px; font-weight: 700; color: #fff; letter-spacing: -0.02em;">QAVIX</div>
-                        <div style="font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-secondary-bright); font-weight: 700;">SEO Control Panel</div>
+                        <div style="font-family: var(--font-clash); font-size: 20px; font-weight: 700; color: #fff; letter-spacing: -0.02em; white-space: nowrap;">QAVIX</div>
+                        <div style="font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-secondary-bright); font-weight: 700; white-space: nowrap;">SEO Control Panel</div>
                     </div>
                 </a>
+                <button type="button" class="mobile-close-btn" onclick="closeSidebar()" title="Close menu">✕</button>
             </div>
 
             <nav style="flex: 1 0 auto; display: flex; flex-direction: column; gap: 4px;">
@@ -243,6 +368,19 @@
                     <span>Customer Inquiries</span>
                 </a>
 
+                <a href="{{ route('admin.launchpad.index') }}" class="admin-nav-item {{ request()->routeIs('admin.launchpad.*') ? 'active' : '' }}">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                    </svg>
+                    <span style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
+                        <span>Launchpad Leads</span>
+                        @php $unreadLaunchpadCount = \App\Models\LaunchpadLead::where('is_read', false)->count(); @endphp
+                        @if($unreadLaunchpadCount > 0)
+                            <span style="background: var(--color-secondary-bright); color: #000; font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 9999px;">{{ $unreadLaunchpadCount }}</span>
+                        @endif
+                    </span>
+                </a>
+
                 <!-- External Links -->
                 <div style="font-size: 10px; text-transform: uppercase; color: var(--color-text-muted); letter-spacing: 0.08em; padding: 16px 12px 6px; font-weight: 700;">
                     Live Feeds
@@ -319,6 +457,33 @@
             @yield('content')
         </main>
     </div>
+
+    <!-- Mobile Sidebar Controller Script -->
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.querySelector('.admin-sidebar');
+            const backdrop = document.querySelector('.admin-sidebar-backdrop');
+            if (sidebar && backdrop) {
+                sidebar.classList.toggle('open');
+                backdrop.classList.toggle('active');
+            }
+        }
+
+        function closeSidebar() {
+            const sidebar = document.querySelector('.admin-sidebar');
+            const backdrop = document.querySelector('.admin-sidebar-backdrop');
+            if (sidebar && backdrop) {
+                sidebar.classList.remove('open');
+                backdrop.classList.remove('active');
+            }
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeSidebar();
+            }
+        });
+    </script>
 
     @stack('scripts')
 </body>

@@ -111,6 +111,25 @@
             <strong style="color: #f87171;">{{ $unreadContacts }}</strong> unread messages from React contact form
         </div>
     </div>
+
+    <!-- Card 5: Launchpad Founders -->
+    <div class="stat-card">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
+            <div>
+                <div style="font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-muted); font-weight: 600;">Launchpad Founders</div>
+                <div style="font-family: var(--font-clash); font-size: 32px; font-weight: 700; color: #fff; margin-top: 4px;">{{ $totalLaunchpad }}</div>
+            </div>
+            <div style="width: 42px; height: 42px; border-radius: 10px; background: rgba(34, 197, 94, 0.15); display: flex; align-items: center; justify-content: center; color: #4ade80;">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                </svg>
+            </div>
+        </div>
+        <div style="font-size: 12px; color: var(--color-text-secondary); display: flex; justify-content: space-between; align-items: center;">
+            <span><strong style="color: #4ade80;">{{ $unreadLaunchpad }}</strong> new applicants</span>
+            <a href="{{ route('admin.launchpad.index') }}" style="color: var(--color-secondary-bright); text-decoration: none; font-weight: 600;">View leads →</a>
+        </div>
+    </div>
 </div>
 
 <!-- Quick Link / Integration Helper -->

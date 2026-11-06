@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\Admin\CategoryController as AdminCategoryController
 use App\Http\Controllers\Api\Admin\ContactController as AdminContactController;
 use App\Http\Controllers\Api\Admin\DashboardController;
 use App\Http\Controllers\Api\Admin\FaqController as AdminFaqController;
+use App\Http\Controllers\Api\Admin\LaunchpadController as AdminLaunchpadController;
 use App\Http\Controllers\Api\Admin\MediaController;
 use App\Http\Controllers\Api\Admin\SeoPageController;
 use App\Http\Controllers\Api\Admin\SeoSettingController;
@@ -13,6 +14,7 @@ use App\Http\Controllers\Api\Public\BlogController;
 use App\Http\Controllers\Api\Public\CategoryController;
 use App\Http\Controllers\Api\Public\ContactController;
 use App\Http\Controllers\Api\Public\FaqController as PublicFaqController;
+use App\Http\Controllers\Api\Public\LaunchpadController as PublicLaunchpadController;
 use App\Http\Controllers\Api\Public\SeoController;
 use Illuminate\Support\Facades\Route;
 
@@ -47,6 +49,10 @@ Route::get('/sitemap', [SeoController::class, 'sitemapJson']);
 
 // Contact / Leads Form Submission
 Route::post('/contact', [ContactController::class, 'store']);
+
+// Launchpad Founder Application (/launchpad)
+Route::post('/launchpad', [PublicLaunchpadController::class, 'store']);
+Route::post('/launchpad/apply', [PublicLaunchpadController::class, 'store']);
 
 
 /*
@@ -106,4 +112,10 @@ Route::prefix('admin')->middleware('auth:sanctum')->group(function () {
     Route::get('/contacts', [AdminContactController::class, 'index']);
     Route::patch('/contacts/{id}/read', [AdminContactController::class, 'markAsRead']);
     Route::delete('/contacts/{id}', [AdminContactController::class, 'destroy']);
+
+    // Launchpad Founder Leads
+    Route::get('/launchpad', [AdminLaunchpadController::class, 'index']);
+    Route::get('/launchpad/{id}', [AdminLaunchpadController::class, 'show']);
+    Route::patch('/launchpad/{id}/status', [AdminLaunchpadController::class, 'updateStatus']);
+    Route::delete('/launchpad/{id}', [AdminLaunchpadController::class, 'destroy']);
 });

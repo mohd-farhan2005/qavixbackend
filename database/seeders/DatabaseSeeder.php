@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Blog;
 use App\Models\Category;
 use App\Models\Faq;
+use App\Models\LaunchpadLead;
 use App\Models\SeoPage;
 use App\Models\SeoSetting;
 use App\Models\User;
@@ -331,6 +332,47 @@ class DatabaseSeeder extends Seeder
             Faq::updateOrCreate(
                 ['question' => $faqData['question']],
                 $faqData
+            );
+        }
+
+        // 7. Seed Sample Launchpad Applicants
+        $launchpadFounders = [
+            [
+                'full_name' => 'Aarav Sharma',
+                'email' => 'aarav@neuroflow.ai',
+                'whatsapp_number' => '+91 98765 43210',
+                'startup_name' => 'NeuroFlow AI',
+                'industry' => 'Artificial Intelligence & SaaS',
+                'status' => 'new',
+                'is_read' => false,
+                'notes' => 'Applied for AI agent development & cloud scaling architecture.',
+            ],
+            [
+                'full_name' => 'Sneha Patel',
+                'email' => 'sneha@fintechpulse.io',
+                'whatsapp_number' => '+91 91234 56789',
+                'startup_name' => 'FinPulse',
+                'industry' => 'Fintech',
+                'status' => 'contacted',
+                'is_read' => true,
+                'notes' => 'Connected on WhatsApp. Scheduled discovery call for next Tuesday.',
+            ],
+            [
+                'full_name' => 'Rohan Mehta',
+                'email' => 'rohan@greenvolt.co',
+                'whatsapp_number' => '+91 99887 76655',
+                'startup_name' => 'GreenVolt EV',
+                'industry' => 'CleanTech / IoT',
+                'status' => 'qualified',
+                'is_read' => true,
+                'notes' => 'Qualified for the first cohort. Pitch deck reviewed.',
+            ],
+        ];
+
+        foreach ($launchpadFounders as $founder) {
+            LaunchpadLead::updateOrCreate(
+                ['email' => $founder['email']],
+                $founder
             );
         }
     }

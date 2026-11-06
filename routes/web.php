@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\FaqController;
+use App\Http\Controllers\Admin\LaunchpadController;
 use App\Http\Controllers\Admin\MediaController;
 use App\Http\Controllers\Admin\SeoPageController;
 use App\Http\Controllers\Admin\SeoSettingController;
@@ -78,6 +79,13 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     Route::get('/contacts', [ContactController::class, 'index'])->name('contacts.index');
     Route::get('/contacts/{id}', [ContactController::class, 'show'])->name('contacts.show');
     Route::delete('/contacts/{id}', [ContactController::class, 'destroy'])->name('contacts.destroy');
+
+    // Launchpad Founder Applications (From React /launchpad)
+    Route::get('/launchpad', [LaunchpadController::class, 'index'])->name('launchpad.index');
+    Route::get('/launchpad/{id}', [LaunchpadController::class, 'show'])->name('launchpad.show');
+    Route::patch('/launchpad/{id}/status', [LaunchpadController::class, 'updateStatus'])->name('launchpad.update-status');
+    Route::post('/launchpad/{id}/toggle-read', [LaunchpadController::class, 'toggleRead'])->name('launchpad.toggle-read');
+    Route::delete('/launchpad/{id}', [LaunchpadController::class, 'destroy'])->name('launchpad.destroy');
 });
 
 // Storage fallback handler for Apache / Wamp environments

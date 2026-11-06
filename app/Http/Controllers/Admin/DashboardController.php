@@ -7,6 +7,7 @@ use App\Models\Blog;
 use App\Models\Category;
 use App\Models\Contact;
 use App\Models\Faq;
+use App\Models\LaunchpadLead;
 use App\Models\MediaUpload;
 use App\Models\SeoPage;
 use App\Models\SeoSetting;
@@ -26,9 +27,12 @@ class DashboardController extends Controller
         $totalFaqs = Faq::count();
         $activeFaqs = Faq::active()->count();
         $unreadContacts = Contact::where('is_read', false)->count();
+        $totalLaunchpad = LaunchpadLead::count();
+        $unreadLaunchpad = LaunchpadLead::where('is_read', false)->count();
 
         $recentBlogs = Blog::with('category')->latest()->take(5)->get();
         $recentContacts = Contact::latest()->take(5)->get();
+        $recentLaunchpad = LaunchpadLead::latest()->take(5)->get();
         $seoSetting = SeoSetting::instance();
 
         return view('admin.dashboard', compact(
@@ -42,8 +46,11 @@ class DashboardController extends Controller
             'totalFaqs',
             'activeFaqs',
             'unreadContacts',
+            'totalLaunchpad',
+            'unreadLaunchpad',
             'recentBlogs',
             'recentContacts',
+            'recentLaunchpad',
             'seoSetting'
         ));
     }
