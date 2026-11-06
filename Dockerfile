@@ -50,3 +50,4 @@ EXPOSE 8080
 
 # Execute entrypoint
 CMD ["sh", "start.sh"]
+
