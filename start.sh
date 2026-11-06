@@ -33,3 +33,4 @@ php artisan view:cache || true
 PORT_TO_USE="${PORT:-8080}"
 echo "==> [Railway] Application ready! Serving on http://0.0.0.0:${PORT_TO_USE}"
 exec php artisan serve --host=0.0.0.0 --port="${PORT_TO_USE}"
+
