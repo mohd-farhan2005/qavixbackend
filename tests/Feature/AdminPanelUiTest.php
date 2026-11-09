@@ -42,7 +42,7 @@ class AdminPanelUiTest extends TestCase
         $response->assertStatus(200)
             ->assertSee('Admin Control Center')
             ->assertSee('Username or Email')
-            ->assertSee('admin / qavix@2026');
+            ->assertSee('admin / qavyx@2026');
     }
 
     public function test_admin_can_login_via_web_form(): void

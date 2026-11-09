@@ -31,11 +31,11 @@ class SeoSetting extends Model
     public static function instance(): self
     {
         return static::firstOrCreate([], [
-            'site_name' => 'Qavix',
+            'site_name' => 'Qavyx',
             'title_separator' => ' | ',
-            'default_meta_title' => 'Qavix - Modern Digital Solutions',
-            'default_meta_description' => 'Qavix delivers high quality web development, digital solutions and technology consulting.',
-            'default_meta_keywords' => 'qavix, web development, react, laravel, seo',
+            'default_meta_title' => 'Qavyx - Modern Digital Solutions',
+            'default_meta_description' => 'Qavyx delivers high quality web development, digital solutions and technology consulting.',
+            'default_meta_keywords' => 'qavyx, web development, react, laravel, seo',
             'sitemap_enabled' => true,
         ]);
     }

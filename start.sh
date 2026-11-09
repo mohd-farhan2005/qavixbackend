@@ -1,7 +1,7 @@
 #!/bin/sh
 set -e
 
-echo "==> [Railway] Booting Qavix Backend..."
+echo "==> [Railway] Booting Qavyx Backend..."
 
 # Clean invalid ASSET_URL and APP_URL in cloud environments
 if [ -n "$ASSET_URL" ]; then

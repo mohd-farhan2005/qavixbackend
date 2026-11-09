@@ -35,7 +35,7 @@ class SeoController extends Controller
             })
             ->first();
 
-        $siteName = $globalSettings->site_name ?: 'Qavix';
+        $siteName = $globalSettings->site_name ?: 'Qavyx';
         $separator = $globalSettings->title_separator ?: ' | ';
 
         $rawTitle = $page?->meta_title ?: ($page?->page_name ?: $globalSettings->default_meta_title);

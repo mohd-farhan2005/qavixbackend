@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>@yield('title', 'Admin Portal | QAVIX')</title>
+    <title>@yield('title', 'Admin Portal | QAVYX')</title>
 
     <!-- Clash Display & Plus Jakarta Sans Fonts -->
     <link rel="preconnect" href="https://api.fontshare.com">
@@ -353,7 +353,7 @@
                 Q
             </div>
             <div>
-                <div style="font-family: var(--font-clash); font-size: 18px; font-weight: 700; color: #fff; line-height: 1.1;">QAVIX</div>
+                <div style="font-family: var(--font-clash); font-size: 18px; font-weight: 700; color: #fff; line-height: 1.1;">QAVYX</div>
                 <div style="font-size: 9px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-secondary-bright); font-weight: 700;">Control Panel</div>
             </div>
         </div>
@@ -379,7 +379,7 @@
                         Q
                     </div>
                     <div>
-                        <div style="font-family: var(--font-clash); font-size: 20px; font-weight: 700; color: #fff; letter-spacing: -0.02em; white-space: nowrap;">QAVIX</div>
+                        <div style="font-family: var(--font-clash); font-size: 20px; font-weight: 700; color: #fff; letter-spacing: -0.02em; white-space: nowrap;">QAVYX</div>
                         <div style="font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-secondary-bright); font-weight: 700; white-space: nowrap;">SEO Control Panel</div>
                     </div>
                 </a>

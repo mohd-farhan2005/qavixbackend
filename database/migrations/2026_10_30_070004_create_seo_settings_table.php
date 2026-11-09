@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('seo_settings', function (Blueprint $table) {
             $table->id();
-            $table->string('site_name')->default('Qavix');
+            $table->string('site_name')->default('Qavyx');
             $table->string('title_separator')->default(' | ');
             $table->string('default_meta_title')->nullable();
             $table->text('default_meta_description')->nullable();

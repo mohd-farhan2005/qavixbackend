@@ -1,6 +1,6 @@
-# Qavix Backend API Documentation
+# Qavyx Backend API Documentation
 
-Welcome to the **Qavix Laravel REST API Backend**. This backend provides comprehensive APIs for modern React frontends and an SEO-focused Admin Panel.
+Welcome to the **Qavyx Laravel REST API Backend**. This backend provides comprehensive APIs for modern React frontends and an SEO-focused Admin Panel.
 
 ---
 
@@ -8,8 +8,8 @@ Welcome to the **Qavix Laravel REST API Backend**. This backend provides compreh
 
 ### Default Admin Credentials
 - **Username:** `admin`
-- **Email:** `admin@qavix.com`
-- **Password:** `qavix@2026`
+- **Email:** `admin@Qavyx.com`
+- **Password:** `Qavyx@2026`
 
 All protected admin endpoints require a Bearer token in the `Authorization` header:
 ```http
@@ -35,7 +35,7 @@ Content-Type: application/json
 
 {
   "username": "admin",
-  "password": "qavix@2026"
+  "password": "Qavyx@2026"
 }
 ```
 
@@ -48,9 +48,9 @@ Content-Type: application/json
   "token_type": "Bearer",
   "user": {
     "id": 1,
-    "name": "Qavix Admin",
+    "name": "Qavyx Admin",
     "username": "admin",
-    "email": "admin@qavix.com",
+    "email": "admin@Qavyx.com",
     "role": "admin",
     "avatar": null
   }
@@ -83,7 +83,7 @@ Content-Type: application/json
   "slug": "mastering-seo-in-modern-react-applications",
   "excerpt": "A short summary of the post...",
   "content": "<p>Full blog content in HTML or Markdown...</p>",
-  "featured_image": "http://localhost/qavix-back/storage/uploads/example.jpg",
+  "featured_image": "http://localhost/Qavyx-back/storage/uploads/example.jpg",
   "featured_image_alt": "Alt text for SEO",
   "featured_image_caption": "Caption",
   "category_id": 1,
@@ -98,12 +98,12 @@ Content-Type: application/json
   "robots_follow": true,
   "og_title": "Social Sharing Title",
   "og_description": "Social Sharing Description",
-  "og_image": "http://localhost/qavix-back/storage/uploads/og-example.jpg",
+  "og_image": "http://localhost/Qavyx-back/storage/uploads/og-example.jpg",
   "og_type": "article",
   "twitter_card": "summary_large_image",
   "twitter_title": "Twitter Card Title",
   "twitter_description": "Twitter Card Description",
-  "twitter_image": "http://localhost/qavix-back/storage/uploads/twitter-example.jpg",
+  "twitter_image": "http://localhost/Qavyx-back/storage/uploads/twitter-example.jpg",
   "schema_markup": {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
@@ -190,29 +190,29 @@ Returns:
   "success": true,
   "data": {
     "path": "/about",
-    "title": "About Qavix - Innovators in High-Performance Digital Solutions | Qavix",
-    "description": "Learn about the mission, team, and technology stack powering Qavix.",
-    "keywords": "about qavix, digital agency, tech team, react specialists",
-    "canonical": "http://localhost/qavix-back/about",
+    "title": "About Qavyx - Innovators in High-Performance Digital Solutions | Qavyx",
+    "description": "Learn about the mission, team, and technology stack powering Qavyx.",
+    "keywords": "about Qavyx, digital agency, tech team, react specialists",
+    "canonical": "http://localhost/Qavyx-back/about",
     "robots": "index, follow",
     "openGraph": {
-      "site_name": "Qavix",
-      "title": "About Qavix - Our Vision, Values & Technology",
-      "description": "Discover how Qavix helps startups and enterprises scale through engineering excellence.",
+      "site_name": "Qavyx",
+      "title": "About Qavyx - Our Vision, Values & Technology",
+      "description": "Discover how Qavyx helps startups and enterprises scale through engineering excellence.",
       "image": "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200",
       "type": "website"
     },
     "twitter": {
       "card": "summary_large_image",
-      "title": "About Qavix - Our Vision, Values & Technology",
-      "description": "Discover how Qavix helps startups and enterprises scale through engineering excellence.",
+      "title": "About Qavyx - Our Vision, Values & Technology",
+      "description": "Discover how Qavyx helps startups and enterprises scale through engineering excellence.",
       "image": "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200",
-      "site": "@qavix"
+      "site": "@Qavyx"
     },
     "schema": {
       "@context": "https://schema.org",
       "@type": "WebSite",
-      "name": "Qavix"
+      "name": "Qavyx"
     },
     "verification": {
       "google": "...",
@@ -237,7 +237,7 @@ export function usePageSeo() {
   const [seo, setSeo] = useState(null);
 
   useEffect(() => {
-    fetch(`http://localhost/qavix-back/api/seo?path=${location.pathname}`)
+    fetch(`http://localhost/Qavyx-back/api/seo?path=${location.pathname}`)
       .then(res => res.json())
       .then(res => {
         if (res.success) setSeo(res.data);

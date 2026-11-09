@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'FAQs & Schema Management | QAVIX Control Center')
+@section('title', 'FAQs & Schema Management | QAVYX Control Center')
 
 @section('content')
 <div class="top-navbar">

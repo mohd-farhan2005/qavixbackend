@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Page Meta Tags & SEO Manager | QAVIX Control Center')
+@section('title', 'Page Meta Tags & SEO Manager | QAVYX Control Center')
 
 @section('content')
 <div class="top-navbar">

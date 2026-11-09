@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Global SEO & Verification Settings | QAVIX Control Center')
+@section('title', 'Global SEO & Verification Settings | QAVYX Control Center')
 
 @section('content')
 <div class="top-navbar">
@@ -50,7 +50,7 @@
                     <label for="default_meta_title" style="display: block; font-size: 13px; font-weight: 600; color: #e5e7eb; margin-bottom: 8px;">
                         Default Meta Title (Used when page title is not set)
                     </label>
-                    <input type="text" name="default_meta_title" id="default_meta_title" value="{{ old('default_meta_title', $settings->default_meta_title) }}" placeholder="e.g. Qavix - Cutting-Edge Digital & Web Solutions" style="width: 100%; padding: 12px 14px; background: rgba(0,0,0,0.4); border: 1px solid var(--color-dark-border); border-radius: 6px; color: #fff; font-size: 14px;">
+                    <input type="text" name="default_meta_title" id="default_meta_title" value="{{ old('default_meta_title', $settings->default_meta_title) }}" placeholder="e.g. QAVYX - Cutting-Edge Digital & Web Solutions" style="width: 100%; padding: 12px 14px; background: rgba(0,0,0,0.4); border: 1px solid var(--color-dark-border); border-radius: 6px; color: #fff; font-size: 14px;">
                 </div>
 
                 <!-- Default Meta Description -->
@@ -66,7 +66,7 @@
                     <label for="default_meta_keywords" style="display: block; font-size: 13px; font-weight: 600; color: #e5e7eb; margin-bottom: 8px;">
                         Default Meta Keywords
                     </label>
-                    <input type="text" name="default_meta_keywords" id="default_meta_keywords" value="{{ old('default_meta_keywords', $settings->default_meta_keywords) }}" placeholder="qavix, web development, react, laravel" style="width: 100%; padding: 12px 14px; background: rgba(0,0,0,0.4); border: 1px solid var(--color-dark-border); border-radius: 6px; color: #fff; font-size: 14px;">
+                    <input type="text" name="default_meta_keywords" id="default_meta_keywords" value="{{ old('default_meta_keywords', $settings->default_meta_keywords) }}" placeholder="QAVYX, web development, react, laravel" style="width: 100%; padding: 12px 14px; background: rgba(0,0,0,0.4); border: 1px solid var(--color-dark-border); border-radius: 6px; color: #fff; font-size: 14px;">
                 </div>
 
                 <!-- Default OG Image & Twitter Handle -->
@@ -81,7 +81,7 @@
                         <label for="twitter_handle" style="display: block; font-size: 13px; font-weight: 600; color: #e5e7eb; margin-bottom: 8px;">
                             Twitter Handle
                         </label>
-                        <input type="text" name="twitter_handle" id="twitter_handle" value="{{ old('twitter_handle', $settings->twitter_handle) }}" placeholder="@qavix" style="width: 100%; padding: 12px 14px; background: rgba(0,0,0,0.4); border: 1px solid var(--color-dark-border); border-radius: 6px; color: #fff; font-size: 14px;">
+                        <input type="text" name="twitter_handle" id="twitter_handle" value="{{ old('twitter_handle', $settings->twitter_handle) }}" placeholder="@QAVYX" style="width: 100%; padding: 12px 14px; background: rgba(0,0,0,0.4); border: 1px solid var(--color-dark-border); border-radius: 6px; color: #fff; font-size: 14px;">
                     </div>
                 </div>
             </div>

@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Edit Blog Post: ' . $blog->title . ' | QAVIX Control Center')
+@section('title', 'Edit Blog Post: ' . $blog->title . ' | QAVYX Control Center')
 
 @section('content')
 <div class="top-navbar">
@@ -99,8 +99,8 @@
                         Live Google Search Engine Snippet Preview
                     </div>
                     <div class="live-preview-box">
-                        <div class="serp-url" id="preview-url">http://localhost/qavix-back/blog/<span>{{ $blog->slug }}</span></div>
-                        <div class="serp-title" id="preview-title">{{ $blog->meta_title ?: $blog->title }} | Qavix</div>
+                        <div class="serp-url" id="preview-url">http://localhost/QAVYX-back/blog/<span>{{ $blog->slug }}</span></div>
+                        <div class="serp-title" id="preview-title">{{ $blog->meta_title ?: $blog->title }} | QAVYX</div>
                         <div class="serp-desc" id="preview-desc">{{ $blog->meta_description ?: ($blog->excerpt ?: Str::limit(strip_tags($blog->content), 150)) }}</div>
                     </div>
                 </div>
@@ -371,7 +371,7 @@
 
         const slugVal = slugInput.value.trim() || 'your-post-slug';
 
-        previewTitle.textContent = titleVal + ' | Qavix';
+        previewTitle.textContent = titleVal + ' | QAVYX';
         previewDesc.textContent = descVal;
         previewUrl.textContent = slugVal;
 

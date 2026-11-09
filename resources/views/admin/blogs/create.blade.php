@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Create New Blog Post | QAVIX Control Center')
+@section('title', 'Create New Blog Post | QAVYX Control Center')
 
 @section('content')
 <div class="top-navbar">
@@ -101,8 +101,8 @@
                         Live Google Search Engine Snippet Preview
                     </div>
                     <div class="live-preview-box">
-                        <div class="serp-url" id="preview-url">http://localhost/qavix-back/blog/<span>your-post-slug</span></div>
-                        <div class="serp-title" id="preview-title">Post Title | Qavix</div>
+                        <div class="serp-url" id="preview-url">http://localhost/QAVYX-back/blog/<span>your-post-slug</span></div>
+                        <div class="serp-title" id="preview-title">Post Title | QAVYX</div>
                         <div class="serp-desc" id="preview-desc">Enter a meta description to see how this article will appear in Google search results...</div>
                     </div>
                 </div>
@@ -371,7 +371,7 @@
 
         const slugVal = slugInput.value.trim() || 'your-post-slug';
 
-        previewTitle.textContent = titleVal + ' | Qavix';
+        previewTitle.textContent = titleVal + ' | QAVYX';
         previewDesc.textContent = descVal;
         previewUrl.textContent = slugVal;
 

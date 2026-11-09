@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Login | QAVIX Control Center</title>
+    <title>Admin Login | QAVYX Control Center</title>
 
     <!-- Clash Display & Plus Jakarta Sans Fonts -->
     <link rel="preconnect" href="https://api.fontshare.com">
@@ -371,7 +371,7 @@
                         <input type="checkbox" name="remember" class="remember-checkbox" checked>
                         <span>Remember session</span>
                     </label>
-                    <span class="default-hint">Admin default: admin / qavix@2026</span>
+                    <span class="default-hint">Admin default: admin / qavyx@2026</span>
                 </div>
 
                 <!-- Submit Button -->

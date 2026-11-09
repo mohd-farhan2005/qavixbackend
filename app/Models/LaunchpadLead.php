@@ -61,7 +61,7 @@ class LaunchpadLead extends Model
     public function getWhatsappLinkAttribute(): string
     {
         $cleanPhone = preg_replace('/[^0-9]/', '', $this->whatsapp_number);
-        $message = urlencode("Hi {$this->full_name}, thank you for applying to the Qavix Launchpad!");
+        $message = urlencode("Hi {$this->full_name}, thank you for applying to the Qavyx Launchpad!");
         return "https://wa.me/{$cleanPhone}?text={$message}";
     }
 }
