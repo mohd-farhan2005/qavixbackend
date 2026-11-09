@@ -3,6 +3,20 @@ set -e
 
 echo "==> [Railway] Booting Qavix Backend..."
 
+# Clean invalid ASSET_URL and APP_URL in cloud environments
+if [ -n "$ASSET_URL" ]; then
+    if echo "$ASSET_URL" | grep -q "localhost" || echo "$ASSET_URL" | grep -q "/public$"; then
+        echo "==> [Railway] Sanitizing ASSET_URL for cloud production..."
+        export ASSET_URL=""
+        unset ASSET_URL
+    fi
+fi
+
+if [ -n "$RAILWAY_STATIC_URL" ] && { [ -z "$APP_URL" ] || echo "$APP_URL" | grep -q "localhost"; }; then
+    echo "==> [Railway] Setting APP_URL to https://${RAILWAY_STATIC_URL}..."
+    export APP_URL="https://${RAILWAY_STATIC_URL}"
+fi
+
 # Ensure storage and bootstrap directories exist
 mkdir -p storage/framework/sessions storage/framework/views storage/framework/cache storage/logs bootstrap/cache
 chmod -R 775 storage bootstrap/cache 2>/dev/null || true

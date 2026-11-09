@@ -14,9 +14,123 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- CSS -->
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <link rel="stylesheet" href="{{ secure_asset('css/style.css') }}">
+    <link rel="stylesheet" href="/css/style.css">
     
     <style>
+        @import url('https://api.fontshare.com/v2/css?f[]=clash-display@200,300,400,500,600,700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+
+        :root {
+            --color-black: #050605;
+            --color-black-pure: #000000;
+            --color-dark-surface: #090b09;
+            --color-dark-card: #0d0f0d;
+            --color-dark-card-hover: #131713;
+            --color-dark-border: rgba(255, 255, 255, 0.08);
+            --color-dark-border-hover: rgba(34, 197, 94, 0.4);
+
+            --color-secondary: #16a34a;
+            --color-secondary-bright: #22c55e;
+            --color-secondary-light: #4ade80;
+            --color-secondary-subtle: rgba(34, 197, 94, 0.12);
+            --color-secondary-glow: rgba(34, 197, 94, 0.35);
+            --color-secondary-border: rgba(34, 197, 94, 0.3);
+
+            --color-text-primary: #f5f6f8;
+            --color-text-secondary: #9ca3af;
+            --color-text-muted: #6b7280;
+
+            --font-clash: 'Clash Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+            --radius-sm: 8px;
+            --radius-md: 14px;
+            --radius-lg: 18px;
+            --radius-xl: 24px;
+            --radius-full: 9999px;
+
+            --transition-fast: 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+            --transition-smooth: 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--color-black);
+            color: var(--color-text-primary);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1, h2, h3, h4, h5, h6, .font-clash {
+            font-family: var(--font-clash);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            font-size: 13px;
+            border-radius: var(--radius-sm);
+            padding: 10px 18px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            border: 1px solid transparent;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--color-secondary-bright), var(--color-secondary));
+            color: #fff !important;
+            box-shadow: 0 4px 16px var(--color-secondary-glow);
+        }
+        .btn-primary:hover {
+            background: linear-gradient(135deg, var(--color-secondary), #15803d);
+            box-shadow: 0 6px 20px rgba(34, 197, 94, 0.5);
+            transform: translateY(-1px);
+        }
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: var(--color-dark-border);
+            color: #fff !important;
+        }
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+        .btn-sm {
+            padding: 8px 14px;
+            font-size: 12px;
+        }
+
+        /* Alerts */
+        .alert {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 20px;
+            border-radius: 12px;
+            font-size: 14px;
+        }
+        .alert-success {
+            background: rgba(34, 197, 94, 0.08);
+            border: 1px solid rgba(34, 197, 94, 0.4);
+            color: #4ade80;
+            box-shadow: 0 0 20px rgba(34, 197, 94, 0.1);
+        }
+        .alert-danger {
+            background: rgba(239, 68, 68, 0.12);
+            border: 1px solid rgba(239, 68, 68, 0.4);
+            color: #f87171;
+        }
         /* Admin Layout Structure */
         .admin-layout {
             display: flex;
