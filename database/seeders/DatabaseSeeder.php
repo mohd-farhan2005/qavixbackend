@@ -375,5 +375,8 @@ class DatabaseSeeder extends Seeder
                 $founder
             );
         }
+
+        // 8. Seed Team Members / Directors
+        $this->call(TeamMemberSeeder::class);
     }
 }

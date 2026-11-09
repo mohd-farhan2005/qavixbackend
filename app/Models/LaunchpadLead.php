@@ -65,4 +65,3 @@ class LaunchpadLead extends Model
         return "https://wa.me/{$cleanPhone}?text={$message}";
     }
 }
-

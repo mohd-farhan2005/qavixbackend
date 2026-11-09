@@ -301,3 +301,117 @@ export function usePageSeo() {
 }
 ```
 
+---
+
+### Public Team & Leadership API (Directors Section):
+- `GET /api/team` (or `GET /api/team-members`)
+Returns all active team members sorted by display order.
+
+#### Response Example:
+```json
+{
+  "success": true,
+  "count": 5,
+  "data": [
+    {
+      "id": 1,
+      "name": "Zack Hill",
+      "position": "Founder & CEO",
+      "email": "zack@qavyx.com",
+      "photo": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800",
+      "photo_url": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800",
+      "order": 1,
+      "is_active": true,
+      "created_at": "2026-11-09T12:00:00.000000Z",
+      "updated_at": "2026-11-09T12:00:00.000000Z"
+    },
+    {
+      "id": 2,
+      "name": "Arlton Lowry",
+      "position": "Partner & CCO",
+      "email": "arlton@qavyx.com",
+      "photo": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=800",
+      "photo_url": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=800",
+      "order": 2,
+      "is_active": true
+    },
+    {
+      "id": 3,
+      "name": "Sarah Devine",
+      "position": "Director of Projects",
+      "email": "sarah@qavyx.com",
+      "photo": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800",
+      "photo_url": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800",
+      "order": 3,
+      "is_active": true
+    },
+    {
+      "id": 4,
+      "name": "Will Carter",
+      "position": "Director of Accounts",
+      "email": "will@qavyx.com",
+      "photo": "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=800",
+      "photo_url": "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=800",
+      "order": 4,
+      "is_active": true
+    },
+    {
+      "id": 5,
+      "name": "Calvin Bramlett",
+      "position": "Creative & Design Director",
+      "email": "calvin@qavyx.com",
+      "photo": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=800",
+      "photo_url": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=800",
+      "order": 5,
+      "is_active": true
+    }
+  ]
+}
+```
+
+#### React Frontend Component Example:
+```jsx
+import React, { useEffect, useState } from 'react';
+
+export function TeamSection() {
+  const [team, setTeam] = useState([]);
+
+  useEffect(() => {
+    fetch('https://qavixbackend-production.up.railway.app/api/team')
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) setTeam(data.data);
+      });
+  }, []);
+
+  return (
+    <section className="bg-black py-20 px-6">
+      <div className="max-w-7xl mx-auto">
+        <h2 className="text-3xl font-bold text-white mb-12">Leadership & Directors</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+          {team.map(member => (
+            <div key={member.id} className="relative group overflow-hidden rounded-t-[50px] bg-[#0c0d0c] border border-white/10 p-4">
+              <div className="aspect-[3/4] overflow-hidden rounded-t-[40px] mb-4">
+                <img
+                  src={member.photo_url}
+                  alt={member.name}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                />
+              </div>
+              <h3 className="text-lg font-bold text-white">{member.name}</h3>
+              <p className="text-sm text-gray-400">{member.position}</p>
+              {member.email && (
+                <a href={`mailto:${member.email}`} className="text-xs text-green-500 hover:underline block mt-1">
+                  {member.email}
+                </a>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+```
+
+

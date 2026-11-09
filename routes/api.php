@@ -10,12 +10,14 @@ use App\Http\Controllers\Api\Admin\LaunchpadController as AdminLaunchpadControll
 use App\Http\Controllers\Api\Admin\MediaController;
 use App\Http\Controllers\Api\Admin\SeoPageController;
 use App\Http\Controllers\Api\Admin\SeoSettingController;
+use App\Http\Controllers\Api\Admin\TeamController as AdminTeamController;
 use App\Http\Controllers\Api\Public\BlogController;
 use App\Http\Controllers\Api\Public\CategoryController;
 use App\Http\Controllers\Api\Public\ContactController;
 use App\Http\Controllers\Api\Public\FaqController as PublicFaqController;
 use App\Http\Controllers\Api\Public\LaunchpadController as PublicLaunchpadController;
 use App\Http\Controllers\Api\Public\SeoController;
+use App\Http\Controllers\Api\Public\TeamController as PublicTeamController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -53,6 +55,11 @@ Route::post('/contact', [ContactController::class, 'store']);
 // Launchpad Founder Application (/launchpad)
 Route::post('/launchpad', [PublicLaunchpadController::class, 'store']);
 Route::post('/launchpad/apply', [PublicLaunchpadController::class, 'store']);
+
+// Team & Directors (/api/team & /api/team-members)
+Route::get('/team', [PublicTeamController::class, 'index']);
+Route::get('/team-members', [PublicTeamController::class, 'index']);
+Route::get('/team/{id}', [PublicTeamController::class, 'show']);
 
 
 /*
@@ -118,4 +125,13 @@ Route::prefix('admin')->middleware('auth:sanctum')->group(function () {
     Route::get('/launchpad/{id}', [AdminLaunchpadController::class, 'show']);
     Route::patch('/launchpad/{id}/status', [AdminLaunchpadController::class, 'updateStatus']);
     Route::delete('/launchpad/{id}', [AdminLaunchpadController::class, 'destroy']);
+
+    // Team Members & Leadership CRUD
+    Route::get('/team', [AdminTeamController::class, 'index']);
+    Route::post('/team', [AdminTeamController::class, 'store']);
+    Route::get('/team/{id}', [AdminTeamController::class, 'show']);
+    Route::put('/team/{id}', [AdminTeamController::class, 'update']);
+    Route::post('/team/{id}', [AdminTeamController::class, 'update']);
+    Route::delete('/team/{id}', [AdminTeamController::class, 'destroy']);
+    Route::post('/team/{id}/toggle-active', [AdminTeamController::class, 'toggleActive']);
 });

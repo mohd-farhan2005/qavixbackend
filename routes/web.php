@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\LaunchpadController;
 use App\Http\Controllers\Admin\MediaController;
 use App\Http\Controllers\Admin\SeoPageController;
 use App\Http\Controllers\Admin\SeoSettingController;
+use App\Http\Controllers\Admin\TeamMemberController;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Route;
@@ -86,6 +87,15 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     Route::patch('/launchpad/{id}/status', [LaunchpadController::class, 'updateStatus'])->name('launchpad.update-status');
     Route::post('/launchpad/{id}/toggle-read', [LaunchpadController::class, 'toggleRead'])->name('launchpad.toggle-read');
     Route::delete('/launchpad/{id}', [LaunchpadController::class, 'destroy'])->name('launchpad.destroy');
+
+    // Team Members & Leadership Management
+    Route::get('/team', [TeamMemberController::class, 'index'])->name('team.index');
+    Route::get('/team/create', [TeamMemberController::class, 'create'])->name('team.create');
+    Route::post('/team', [TeamMemberController::class, 'store'])->name('team.store');
+    Route::get('/team/{id}/edit', [TeamMemberController::class, 'edit'])->name('team.edit');
+    Route::put('/team/{id}', [TeamMemberController::class, 'update'])->name('team.update');
+    Route::delete('/team/{id}', [TeamMemberController::class, 'destroy'])->name('team.destroy');
+    Route::post('/team/{id}/toggle-active', [TeamMemberController::class, 'toggleActive'])->name('team.toggle-active');
 });
 
 // Storage fallback handler for Apache / Wamp environments
