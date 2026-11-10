@@ -3,9 +3,11 @@
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\ClientController;
 use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\FaqController;
+use App\Http\Controllers\Admin\IndustryController;
 use App\Http\Controllers\Admin\LaunchpadController;
 use App\Http\Controllers\Admin\MediaController;
 use App\Http\Controllers\Admin\SeoPageController;
@@ -96,6 +98,23 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     Route::put('/team/{id}', [TeamMemberController::class, 'update'])->name('team.update');
     Route::delete('/team/{id}', [TeamMemberController::class, 'destroy'])->name('team.destroy');
     Route::post('/team/{id}/toggle-active', [TeamMemberController::class, 'toggleActive'])->name('team.toggle-active');
+
+    // Industries & Verticals Management
+    Route::get('/industries', [IndustryController::class, 'index'])->name('industries.index');
+    Route::get('/industries/create', [IndustryController::class, 'create'])->name('industries.create');
+    Route::post('/industries', [IndustryController::class, 'store'])->name('industries.store');
+    Route::get('/industries/{id}/edit', [IndustryController::class, 'edit'])->name('industries.edit');
+    Route::put('/industries/{id}', [IndustryController::class, 'update'])->name('industries.update');
+    Route::delete('/industries/{id}', [IndustryController::class, 'destroy'])->name('industries.destroy');
+
+    // Clients & Brands Management
+    Route::get('/clients', [ClientController::class, 'index'])->name('clients.index');
+    Route::get('/clients/create', [ClientController::class, 'create'])->name('clients.create');
+    Route::post('/clients', [ClientController::class, 'store'])->name('clients.store');
+    Route::get('/clients/{id}/edit', [ClientController::class, 'edit'])->name('clients.edit');
+    Route::put('/clients/{id}', [ClientController::class, 'update'])->name('clients.update');
+    Route::delete('/clients/{id}', [ClientController::class, 'destroy'])->name('clients.destroy');
+    Route::post('/clients/{id}/toggle-active', [ClientController::class, 'toggleActive'])->name('clients.toggle-active');
 });
 
 // Storage fallback handler for Apache / Wamp environments

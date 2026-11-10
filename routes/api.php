@@ -3,9 +3,11 @@
 use App\Http\Controllers\Api\Admin\AuthController;
 use App\Http\Controllers\Api\Admin\BlogController as AdminBlogController;
 use App\Http\Controllers\Api\Admin\CategoryController as AdminCategoryController;
+use App\Http\Controllers\Api\Admin\ClientController as AdminClientController;
 use App\Http\Controllers\Api\Admin\ContactController as AdminContactController;
 use App\Http\Controllers\Api\Admin\DashboardController;
 use App\Http\Controllers\Api\Admin\FaqController as AdminFaqController;
+use App\Http\Controllers\Api\Admin\IndustryController as AdminIndustryController;
 use App\Http\Controllers\Api\Admin\LaunchpadController as AdminLaunchpadController;
 use App\Http\Controllers\Api\Admin\MediaController;
 use App\Http\Controllers\Api\Admin\SeoPageController;
@@ -13,8 +15,10 @@ use App\Http\Controllers\Api\Admin\SeoSettingController;
 use App\Http\Controllers\Api\Admin\TeamController as AdminTeamController;
 use App\Http\Controllers\Api\Public\BlogController;
 use App\Http\Controllers\Api\Public\CategoryController;
+use App\Http\Controllers\Api\Public\ClientController as PublicClientController;
 use App\Http\Controllers\Api\Public\ContactController;
 use App\Http\Controllers\Api\Public\FaqController as PublicFaqController;
+use App\Http\Controllers\Api\Public\IndustryController as PublicIndustryController;
 use App\Http\Controllers\Api\Public\LaunchpadController as PublicLaunchpadController;
 use App\Http\Controllers\Api\Public\SeoController;
 use App\Http\Controllers\Api\Public\TeamController as PublicTeamController;
@@ -60,6 +64,14 @@ Route::post('/launchpad/apply', [PublicLaunchpadController::class, 'store']);
 Route::get('/team', [PublicTeamController::class, 'index']);
 Route::get('/team-members', [PublicTeamController::class, 'index']);
 Route::get('/team/{id}', [PublicTeamController::class, 'show']);
+
+// Industries & Verticals (/api/industries)
+Route::get('/industries', [PublicIndustryController::class, 'index']);
+Route::get('/industries/{slug}', [PublicIndustryController::class, 'show']);
+
+// Clients & Brands (/api/clients, supports ?industry=slug, ?featured=1, ?search=...)
+Route::get('/clients', [PublicClientController::class, 'index']);
+Route::get('/clients/{id}', [PublicClientController::class, 'show']);
 
 
 /*
@@ -134,4 +146,20 @@ Route::prefix('admin')->middleware('auth:sanctum')->group(function () {
     Route::post('/team/{id}', [AdminTeamController::class, 'update']);
     Route::delete('/team/{id}', [AdminTeamController::class, 'destroy']);
     Route::post('/team/{id}/toggle-active', [AdminTeamController::class, 'toggleActive']);
+
+    // Industries CRUD
+    Route::get('/industries', [AdminIndustryController::class, 'index']);
+    Route::post('/industries', [AdminIndustryController::class, 'store']);
+    Route::get('/industries/{id}', [AdminIndustryController::class, 'show']);
+    Route::put('/industries/{id}', [AdminIndustryController::class, 'update']);
+    Route::delete('/industries/{id}', [AdminIndustryController::class, 'destroy']);
+
+    // Clients & Brands CRUD
+    Route::get('/clients', [AdminClientController::class, 'index']);
+    Route::post('/clients', [AdminClientController::class, 'store']);
+    Route::get('/clients/{id}', [AdminClientController::class, 'show']);
+    Route::put('/clients/{id}', [AdminClientController::class, 'update']);
+    Route::post('/clients/{id}', [AdminClientController::class, 'update']);
+    Route::delete('/clients/{id}', [AdminClientController::class, 'destroy']);
+    Route::post('/clients/{id}/toggle-active', [AdminClientController::class, 'toggleActive']);
 });

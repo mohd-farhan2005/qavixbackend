@@ -414,4 +414,192 @@ export function TeamSection() {
 }
 ```
 
+---
+
+### Public Clients & Industries APIs:
+
+#### 1. List Industries:
+- `GET /api/industries`
+- Optional query params:
+  - `?with_clients=1` - Includes active clients nested under each industry (ideal for grouped tabs/sections in React)
+  - `?search=fintech` - Filter industries by name
+
+**Response Example (`GET /api/industries`):**
+```json
+{
+  "success": true,
+  "count": 5,
+  "data": [
+    {
+      "id": 1,
+      "name": "Fintech & Web3",
+      "slug": "fintech-web3",
+      "description": "Financial technologies, blockchain rails, and crypto infrastructure.",
+      "order": 1,
+      "is_active": true,
+      "clients_count": 2
+    },
+    {
+      "id": 2,
+      "name": "AI & SaaS",
+      "slug": "ai-saas",
+      "description": "Artificial intelligence models, workflow automations, and B2B SaaS platforms.",
+      "order": 2,
+      "is_active": true,
+      "clients_count": 2
+    }
+  ]
+}
+```
+
+#### 2. List Clients:
+- `GET /api/clients`
+- Query parameters:
+  - `?industry=fintech-web3` - Filter clients by industry slug
+  - `?industry_id=1` - Filter clients by industry ID
+  - `?featured=1` - Get only featured clients / top partners
+  - `?search=hyper` - Search clients by name or description
+  - `?limit=12` - Limit results count
+
+**Response Example (`GET /api/clients?industry=fintech-web3`):**
+```json
+{
+  "success": true,
+  "count": 2,
+  "data": [
+    {
+      "id": 1,
+      "name": "Nexus Pay",
+      "industry_id": 1,
+      "industry": {
+        "id": 1,
+        "name": "Fintech & Web3",
+        "slug": "fintech-web3"
+      },
+      "logo": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=400",
+      "logo_url": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=400",
+      "website_url": "https://example.com/nexus",
+      "description": "Cross-border payment infrastructure for modern commerce.",
+      "featured": true,
+      "order": 1,
+      "is_active": true
+    },
+    {
+      "id": 2,
+      "name": "Aether Vault",
+      "industry_id": 1,
+      "industry": {
+        "id": 1,
+        "name": "Fintech & Web3",
+        "slug": "fintech-web3"
+      },
+      "logo": "https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=400",
+      "logo_url": "https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=400",
+      "website_url": "https://example.com/aether",
+      "description": "Institutional digital asset custody platform.",
+      "featured": true,
+      "order": 2,
+      "is_active": true
+    }
+  ]
+}
+```
+
+#### React Frontend Component Example (Filterable Clients by Industry):
+```jsx
+import React, { useEffect, useState } from 'react';
+
+export function ClientsShowcase() {
+  const [industries, setIndustries] = useState([]);
+  const [clients, setClients] = useState([]);
+  const [activeSlug, setActiveSlug] = useState('all');
+  const [loading, setLoading] = useState(true);
+
+  // Fetch industries on mount
+  useEffect(() => {
+    fetch('https://qavixbackend-production.up.railway.app/api/industries')
+      .then(res => res.json())
+      .then(res => {
+        if (res.success) setIndustries(res.data);
+      });
+  }, []);
+
+  // Fetch clients when industry filter changes
+  useEffect(() => {
+    setLoading(true);
+    const url = activeSlug === 'all'
+      ? 'https://qavixbackend-production.up.railway.app/api/clients'
+      : `https://qavixbackend-production.up.railway.app/api/clients?industry=${activeSlug}`;
+
+    fetch(url)
+      .then(res => res.json())
+      .then(res => {
+        if (res.success) setClients(res.data);
+        setLoading(false);
+      });
+  }, [activeSlug]);
+
+  return (
+    <section className="bg-[#050605] py-24 px-6">
+      <div className="max-w-7xl mx-auto">
+        <div className="text-center mb-14">
+          <span className="text-xs uppercase tracking-widest text-[#22c55e] font-bold">Trusted by Industry Leaders</span>
+          <h2 className="text-4xl font-bold text-white mt-2 font-['Clash_Display']">Our Clients & Partners</h2>
+        </div>
+
+        {/* Industry Filter Pills */}
+        <div className="flex flex-wrap justify-center gap-3 mb-12">
+          <button
+            onClick={() => setActiveSlug('all')}
+            className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${
+              activeSlug === 'all'
+                ? 'bg-[#22c55e] text-black font-bold shadow-lg shadow-green-500/25'
+                : 'bg-white/5 text-gray-400 hover:text-white hover:bg-white/10'
+            }`}
+          >
+            All Industries
+          </button>
+          {industries.map(ind => (
+            <button
+              key={ind.id}
+              onClick={() => setActiveSlug(ind.slug)}
+              className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${
+                activeSlug === ind.slug
+                  ? 'bg-[#22c55e] text-black font-bold shadow-lg shadow-green-500/25'
+                  : 'bg-white/5 text-gray-400 hover:text-white hover:bg-white/10'
+              }`}
+            >
+              {ind.name}
+            </button>
+          ))}
+        </div>
+
+        {/* Clients Grid */}
+        {loading ? (
+          <div className="text-center py-12 text-gray-400">Loading clients...</div>
+        ) : (
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            {clients.map(client => (
+              <a
+                key={client.id}
+                href={client.website_url || '#'}
+                target={client.website_url ? '_blank' : '_self'}
+                rel="noreferrer"
+                className="group relative bg-[#0d0f0d] border border-white/10 hover:border-[#22c55e]/40 rounded-2xl p-6 flex flex-col items-center justify-center text-center transition-all hover:-translate-y-1"
+              >
+                <div className="w-16 h-16 rounded-xl bg-white/5 p-3 flex items-center justify-center mb-4 group-hover:scale-105 transition-transform">
+                  <img src={client.logo_url} alt={client.name} className="max-w-full max-h-full object-contain" />
+                </div>
+                <h3 className="text-white font-bold text-base group-hover:text-[#4ade80] transition-colors">{client.name}</h3>
+                <span className="text-xs text-gray-400 mt-1">{client.industry ? client.industry.name : 'General'}</span>
+              </a>
+            ))}
+          </div>
+        )}
+      </div>
+    </section>
+  );
+}
+```
+
 

@@ -378,5 +378,11 @@ class DatabaseSeeder extends Seeder
 
         // 8. Seed Team Members / Directors
         $this->call(TeamMemberSeeder::class);
+
+        // 9. Seed Industries & Clients
+        $this->call([
+            IndustrySeeder::class,
+            ClientSeeder::class,
+        ]);
     }
 }

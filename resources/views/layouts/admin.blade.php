@@ -449,6 +449,26 @@
                     <span>FAQs & Schema</span>
                 </a>
 
+                <!-- Section: Clients & Partners -->
+                <div style="font-size: 10px; text-transform: uppercase; color: var(--color-text-muted); letter-spacing: 0.08em; padding: 16px 12px 6px; font-weight: 700;">
+                    Clients & Verticals
+                </div>
+
+                <a href="{{ route('admin.clients.index') }}" class="admin-nav-item {{ request()->routeIs('admin.clients.*') ? 'active' : '' }}">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                        <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                    </svg>
+                    <span>Clients & Brands</span>
+                </a>
+
+                <a href="{{ route('admin.industries.index') }}" class="admin-nav-item {{ request()->routeIs('admin.industries.*') ? 'active' : '' }}">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+                    </svg>
+                    <span>Industries</span>
+                </a>
+
                 <!-- Section: SEO Engine -->
                 <div style="font-size: 10px; text-transform: uppercase; color: var(--color-text-muted); letter-spacing: 0.08em; padding: 16px 12px 6px; font-weight: 700;">
                     SEO Engine
