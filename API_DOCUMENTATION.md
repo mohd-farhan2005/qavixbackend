@@ -458,50 +458,211 @@ export function TeamSection() {
   - `?industry=fintech-web3` - Filter clients by industry slug
   - `?industry_id=1` - Filter clients by industry ID
   - `?featured=1` - Get only featured clients / top partners
-  - `?search=hyper` - Search clients by name or description
+  - `?search=stripe` - Search clients by name, tagline, or story
   - `?limit=12` - Limit results count
 
-**Response Example (`GET /api/clients?industry=fintech-web3`):**
+#### 3. Single Client / Case Study Page (with Hero Banner & Full Story):
+- `GET /api/clients/{slug}` (or `GET /api/clients/{id}`)
+- Returns all rich fields for the dedicated frontend client detail page.
+
+**Response Example (`GET /api/clients/stripe-payments`):**
 ```json
 {
   "success": true,
-  "count": 2,
-  "data": [
-    {
+  "data": {
+    "id": 1,
+    "name": "Stripe Payments",
+    "slug": "stripe-payments",
+    "industry_id": 1,
+    "industry": {
       "id": 1,
-      "name": "Nexus Pay",
-      "industry_id": 1,
-      "industry": {
-        "id": 1,
-        "name": "Fintech & Web3",
-        "slug": "fintech-web3"
-      },
-      "logo": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=400",
-      "logo_url": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=400",
-      "website_url": "https://example.com/nexus",
-      "description": "Cross-border payment infrastructure for modern commerce.",
-      "featured": true,
-      "order": 1,
-      "is_active": true
+      "name": "Fintech & Web3",
+      "slug": "fintech-web3"
     },
-    {
-      "id": 2,
-      "name": "Aether Vault",
-      "industry_id": 1,
-      "industry": {
-        "id": 1,
-        "name": "Fintech & Web3",
-        "slug": "fintech-web3"
-      },
-      "logo": "https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=400",
-      "logo_url": "https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=400",
-      "website_url": "https://example.com/aether",
-      "description": "Institutional digital asset custody platform.",
-      "featured": true,
-      "order": 2,
-      "is_active": true
-    }
-  ]
+    "tagline": "Global financial infrastructure and high-throughput checkout architecture",
+    "logo": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=200",
+    "logo_url": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=200",
+    "banner_image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1920",
+    "banner_image_url": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1920",
+    "website_url": "https://stripe.com",
+    "location": "San Francisco, CA",
+    "project_year": "2026",
+    "client_type": "Enterprise Architecture",
+    "description": "Payment processing infrastructure and billing workflows for modern commerce.",
+    "about": "Engineered a resilient microservices bridge and custom telemetry pipeline to optimize global multi-currency checkout routing.",
+    "challenge": "Legacy payment tunnels suffered from regional latency spikes and cart abandonment.",
+    "solution": "Designed an edge-accelerated routing gateway that intelligently proxies tokenized payments in sub-120ms.",
+    "services": [
+      "Payment Gateway Architecture",
+      "Microservices Optimization",
+      "React Edge UI",
+      "Cloud DevOps"
+    ],
+    "stat_1_value": "+34%",
+    "stat_1_label": "Checkout Conversion Lift",
+    "stat_2_value": "sub-120ms",
+    "stat_2_label": "Global API Latency",
+    "stat_3_value": "$800M+",
+    "stat_3_label": "Annual Volume Routed",
+    "testimonial_quote": "Qavyx engineered an exceptionally resilient infrastructure that handled our Black Friday spikes without breaking a sweat.",
+    "testimonial_author": "Marcus Vance",
+    "testimonial_position": "Head of Core Infrastructure",
+    "testimonial_avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200",
+    "testimonial_avatar_url": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200",
+    "gallery": null,
+    "video_url": null,
+    "meta_title": "Stripe Payments Case Study | Qavyx High-Scale Engineering",
+    "meta_description": "How Qavyx optimized cross-border transaction latency and checkout conversion rates.",
+    "featured": true,
+    "order": 1,
+    "is_active": true
+  }
+}
+```
+
+#### React Frontend Detail Page Component (`ClientDetailPage.jsx`):
+```jsx
+import React, { useEffect, useState } from 'react';
+import { useParams, Link } from 'react-router-dom';
+
+export function ClientDetailPage() {
+  const { slug } = useParams();
+  const [client, setClient] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch(`https://qavixbackend-production.up.railway.app/api/clients/${slug}`)
+      .then(res => res.json())
+      .then(res => {
+        if (res.success) setClient(res.data);
+        setLoading(false);
+      });
+  }, [slug]);
+
+  if (loading) return <div className="text-white text-center py-24">Loading client story...</div>;
+  if (!client) return <div className="text-white text-center py-24">Client not found.</div>;
+
+  return (
+    <article className="bg-[#050605] text-white min-h-screen">
+      {/* 1. Hero Cover Banner */}
+      <div className="relative h-[480px] w-full overflow-hidden">
+        {client.banner_image_url ? (
+          <img src={client.banner_image_url} alt={client.name} className="w-full h-full object-cover opacity-60" />
+        ) : (
+          <div className="w-full h-full bg-gradient-to-br from-emerald-950/40 via-black to-black" />
+        )}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#050605] via-[#050605]/50 to-transparent" />
+
+        <div className="absolute bottom-10 left-0 right-0 max-w-7xl mx-auto px-6 flex items-end justify-between">
+          <div>
+            <div className="flex items-center gap-4 mb-4">
+              <div className="w-16 h-16 rounded-2xl bg-black/80 border border-white/20 p-3 flex items-center justify-center">
+                <img src={client.logo_url} alt={client.name} className="max-w-full max-h-full object-contain" />
+              </div>
+              <div>
+                <span className="text-xs uppercase tracking-widest text-[#22c55e] font-bold">
+                  {client.industry?.name} • {client.project_year}
+                </span>
+                <h1 className="text-4xl sm:text-5xl font-bold font-['Clash_Display']">{client.name}</h1>
+              </div>
+            </div>
+            {client.tagline && <p className="text-lg text-gray-300 max-w-2xl">{client.tagline}</p>}
+          </div>
+
+          {client.website_url && (
+            <a href={client.website_url} target="_blank" rel="noreferrer" className="hidden sm:inline-flex px-6 py-3 rounded-full bg-[#22c55e] text-black font-bold text-sm hover:scale-105 transition-transform">
+              Visit Live Site ↗
+            </a>
+          )}
+        </div>
+      </div>
+
+      {/* 2. Impact Metrics Bar */}
+      {(client.stat_1_value || client.stat_2_value || client.stat_3_value) && (
+        <div className="border-y border-white/10 bg-white/[0.02]">
+          <div className="max-w-7xl mx-auto px-6 py-8 grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
+            {client.stat_1_value && (
+              <div>
+                <div className="text-4xl font-extrabold text-[#22c55e] font-['Clash_Display']">{client.stat_1_value}</div>
+                <div className="text-xs uppercase tracking-wider text-gray-400 mt-1">{client.stat_1_label}</div>
+              </div>
+            )}
+            {client.stat_2_value && (
+              <div>
+                <div className="text-4xl font-extrabold text-[#22c55e] font-['Clash_Display']">{client.stat_2_value}</div>
+                <div className="text-xs uppercase tracking-wider text-gray-400 mt-1">{client.stat_2_label}</div>
+              </div>
+            )}
+            {client.stat_3_value && (
+              <div>
+                <div className="text-4xl font-extrabold text-[#22c55e] font-['Clash_Display']">{client.stat_3_value}</div>
+                <div className="text-xs uppercase tracking-wider text-gray-400 mt-1">{client.stat_3_label}</div>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* 3. Detailed Case Study: Challenge, Solution, About */}
+      <div className="max-w-5xl mx-auto px-6 py-16">
+        {client.about && (
+          <div className="mb-14">
+            <h2 className="text-2xl font-bold font-['Clash_Display'] mb-4">About the Partnership</h2>
+            <p className="text-gray-300 text-lg leading-relaxed whitespace-pre-line">{client.about}</p>
+          </div>
+        )}
+
+        {(client.challenge || client.solution) && (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-14">
+            {client.challenge && (
+              <div className="bg-[#0d0f0d] border border-white/10 rounded-2xl p-8">
+                <h3 className="text-xl font-bold text-red-400 mb-3">The Challenge</h3>
+                <p className="text-gray-300 leading-relaxed">{client.challenge}</p>
+              </div>
+            )}
+            {client.solution && (
+              <div className="bg-[#0d0f0d] border border-white/10 rounded-2xl p-8">
+                <h3 className="text-xl font-bold text-[#4ade80] mb-3">Our Solution</h3>
+                <p className="text-gray-300 leading-relaxed">{client.solution}</p>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Services delivered chips */}
+        {client.services && client.services.length > 0 && (
+          <div className="mb-14">
+            <h3 className="text-sm uppercase tracking-wider text-gray-400 mb-3">Services Delivered</h3>
+            <div className="flex flex-wrap gap-2">
+              {client.services.map((srv, idx) => (
+                <span key={idx} className="px-4 py-2 rounded-lg bg-white/5 border border-white/10 text-sm text-gray-200">
+                  {srv}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* 4. Client Testimonial Endorsement */}
+        {client.testimonial_quote && (
+          <div className="bg-gradient-to-r from-emerald-950/30 via-[#0d0f0d] to-black border border-[#22c55e]/30 rounded-3xl p-10 my-12">
+            <p className="text-xl sm:text-2xl italic text-gray-200 mb-6 leading-relaxed">
+              "{client.testimonial_quote}"
+            </p>
+            <div className="flex items-center gap-4">
+              {client.testimonial_avatar_url && (
+                <img src={client.testimonial_avatar_url} alt={client.testimonial_author} className="w-12 h-12 rounded-full object-cover" />
+              )}
+              <div>
+                <div className="font-bold text-white">{client.testimonial_author}</div>
+                <div className="text-xs text-gray-400">{client.testimonial_position}</div>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </article>
+  );
 }
 ```
 

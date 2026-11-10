@@ -180,13 +180,22 @@ class ClientAndIndustryTest extends TestCase
     {
         Storage::fake('public');
         $logoFile = UploadedFile::fake()->image('stripe-logo.png', 200, 80);
+        $bannerFile = UploadedFile::fake()->image('stripe-banner.jpg', 1920, 800);
 
         $response = $this->actingAs($this->adminUser)->post('/admin/clients', [
             'name' => 'Stripe',
+            'slug' => 'stripe-checkout',
+            'tagline' => 'Global payment infrastructure',
             'industry_id' => $this->fintech->id,
             'logo' => $logoFile,
+            'banner_image' => $bannerFile,
             'website_url' => 'https://stripe.com',
             'description' => 'Payment gateway leader.',
+            'about' => 'Detailed case study narrative of Stripe checkout integration.',
+            'stat_1_value' => '+34%',
+            'stat_1_label' => 'Conversion Lift',
+            'testimonial_quote' => 'Unbelievable engineering and execution.',
+            'testimonial_author' => 'Marcus Vance',
             'featured' => '1',
             'order' => 1,
             'is_active' => '1',
@@ -197,11 +206,28 @@ class ClientAndIndustryTest extends TestCase
 
         $this->assertDatabaseHas('clients', [
             'name' => 'Stripe',
+            'slug' => 'stripe-checkout',
+            'tagline' => 'Global payment infrastructure',
             'industry_id' => $this->fintech->id,
             'website_url' => 'https://stripe.com',
+            'stat_1_value' => '+34%',
+            'stat_1_label' => 'Conversion Lift',
+            'testimonial_author' => 'Marcus Vance',
             'featured' => true,
             'is_active' => true,
         ]);
+
+        $created = Client::where('slug', 'stripe-checkout')->first();
+        $this->assertNotNull($created->banner_image);
+        $this->assertNotNull($created->banner_image_url);
+
+        // Also test fetching client by slug
+        $apiResponse = $this->getJson('/api/clients/stripe-checkout');
+        $apiResponse->assertStatus(200)
+            ->assertJsonPath('success', true)
+            ->assertJsonPath('data.name', 'Stripe')
+            ->assertJsonPath('data.tagline', 'Global payment infrastructure')
+            ->assertJsonPath('data.stat_1_value', '+34%');
     }
 
     public function test_admin_can_update_client_via_web_form(): void

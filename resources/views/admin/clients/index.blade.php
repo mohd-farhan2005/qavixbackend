@@ -9,7 +9,7 @@
             Clients & Brands
         </h1>
         <p style="color: var(--color-text-secondary); font-size: 14px;">
-            Manage client logos, company details, and assigned industries.
+            Manage client pages, hero banner images, case studies, impact metrics, and assigned industries.
         </p>
     </div>
 
@@ -19,7 +19,7 @@
                 <line x1="12" y1="5" x2="12" y2="19"></line>
                 <line x1="5" y1="12" x2="19" y2="12"></line>
             </svg>
-            <span>Add Client</span>
+            <span>Add Client Page</span>
         </a>
 
         <a href="{{ route('admin.industries.index') }}" class="btn btn-secondary btn-sm" style="display: inline-flex; align-items: center; gap: 6px; text-decoration: none;">
@@ -42,10 +42,10 @@
         </div>
         <div>
             <div style="font-size: 13px; font-weight: 600; color: #fff;">
-                Frontend REST API:
+                Frontend Client REST APIs:
             </div>
             <div style="font-size: 12px; color: var(--color-text-secondary); margin-top: 2px;">
-                Fetch all clients via <code style="color: #4ade80; background: rgba(0,0,0,0.5); padding: 2px 6px; border-radius: 4px;">GET /api/clients</code> or filter by industry: <code style="color: #4ade80; background: rgba(0,0,0,0.5); padding: 2px 6px; border-radius: 4px;">GET /api/clients?industry={slug}</code>
+                Fetch clients grid via <code style="color: #4ade80; background: rgba(0,0,0,0.5); padding: 2px 6px; border-radius: 4px;">GET /api/clients</code> or single client page with banner via <code style="color: #4ade80; background: rgba(0,0,0,0.5); padding: 2px 6px; border-radius: 4px;">GET /api/clients/{slug}</code>
             </div>
         </div>
     </div>
@@ -60,7 +60,7 @@
     <form action="{{ route('admin.clients.index') }}" method="GET" style="display: flex; gap: 12px; flex-wrap: wrap; align-items: center;">
         <!-- Search Input -->
         <div style="flex: 1; min-width: 220px;">
-            <input type="text" name="search" value="{{ request('search') }}" placeholder="Search client name..." style="width: 100%; padding: 10px 14px; background: rgba(0,0,0,0.5); border: 1px solid var(--color-dark-border); border-radius: 6px; color: #fff; font-size: 13px; outline: none;">
+            <input type="text" name="search" value="{{ request('search') }}" placeholder="Search client name, tagline, or story..." style="width: 100%; padding: 10px 14px; background: rgba(0,0,0,0.5); border: 1px solid var(--color-dark-border); border-radius: 6px; color: #fff; font-size: 13px; outline: none;">
         </div>
 
         <!-- Industry Filter Dropdown -->
@@ -98,17 +98,17 @@
                 </svg>
             </div>
             <p style="font-size: 15px; margin-bottom: 12px;">No clients found.</p>
-            <a href="{{ route('admin.clients.create') }}" class="btn btn-primary btn-sm" style="text-decoration: none;">+ Add First Client</a>
+            <a href="{{ route('admin.clients.create') }}" class="btn btn-primary btn-sm" style="text-decoration: none;">+ Add First Client Page</a>
         </div>
     @else
         <div style="overflow-x: auto;">
             <table style="width: 100%; border-collapse: collapse; font-size: 14px; text-align: left;">
                 <thead>
                     <tr style="border-bottom: 1px solid var(--color-dark-border); color: var(--color-text-muted); font-size: 12px; text-transform: uppercase;">
-                        <th style="padding: 14px 18px;">Logo</th>
-                        <th style="padding: 14px 18px;">Client Name</th>
+                        <th style="padding: 14px 18px;">Media (Banner & Logo)</th>
+                        <th style="padding: 14px 18px;">Client & Tagline</th>
                         <th style="padding: 14px 18px;">Industry Vertical</th>
-                        <th style="padding: 14px 18px;">Website</th>
+                        <th style="padding: 14px 18px;">Metrics & Testimonial</th>
                         <th style="padding: 14px 18px;">Order</th>
                         <th style="padding: 14px 18px;">Status</th>
                         <th style="padding: 14px 18px; text-align: right;">Actions</th>
@@ -117,14 +117,24 @@
                 <tbody>
                     @foreach($clients as $client)
                         <tr style="border-bottom: 1px solid rgba(255,255,255,0.04); transition: background 0.15s ease;">
-                            <!-- Logo Preview -->
-                            <td style="padding: 14px 18px; width: 64px;">
-                                <div style="width: 48px; height: 48px; border-radius: 10px; overflow: hidden; background: #060706; border: 1px solid rgba(255, 255, 255, 0.1); display: flex; align-items: center; justify-content: center; padding: 4px;">
-                                    <img src="{{ $client->logo_url }}" alt="{{ $client->name }}" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                            <!-- Media: Banner & Logo -->
+                            <td style="padding: 14px 18px; width: 140px;">
+                                <div style="position: relative; width: 120px; height: 60px; border-radius: 8px; overflow: hidden; background: #080a08; border: 1px solid rgba(255, 255, 255, 0.1);">
+                                    @if($client->banner_image)
+                                        <img src="{{ $client->banner_image_url }}" alt="Banner" style="width: 100%; height: 100%; object-fit: cover; opacity: 0.85;">
+                                    @else
+                                        <div style="width: 100%; height: 100%; background: linear-gradient(135deg, #0d0f0d, #141814); display: flex; align-items: center; justify-content: center; font-size: 10px; color: var(--color-text-muted);">
+                                            No Banner
+                                        </div>
+                                    @endif
+                                    <!-- Logo Overlay in corner -->
+                                    <div style="position: absolute; bottom: 4px; left: 4px; width: 28px; height: 28px; border-radius: 6px; background: rgba(0,0,0,0.85); border: 1px solid rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; padding: 2px;">
+                                        <img src="{{ $client->logo_url }}" alt="Logo" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                                    </div>
                                 </div>
                             </td>
 
-                            <!-- Name & Featured Pill -->
+                            <!-- Name, Slug & Tagline -->
                             <td style="padding: 14px 18px;">
                                 <div style="display: flex; align-items: center; gap: 8px;">
                                     <span style="font-weight: 700; color: #fff; font-size: 15px; font-family: var(--font-clash);">
@@ -136,9 +146,14 @@
                                         </span>
                                     @endif
                                 </div>
-                                @if($client->description)
-                                    <div style="font-size: 12px; color: var(--color-text-secondary); margin-top: 2px;">
-                                        {{ Str::limit($client->description, 50) }}
+                                @if($client->slug)
+                                    <div style="font-size: 11px; color: var(--color-text-muted); margin-top: 2px;">
+                                        <code>/clients/{{ $client->slug }}</code>
+                                    </div>
+                                @endif
+                                @if($client->tagline)
+                                    <div style="font-size: 12px; color: #9ca3af; margin-top: 3px;">
+                                        {{ Str::limit($client->tagline, 45) }}
                                     </div>
                                 @endif
                             </td>
@@ -156,20 +171,22 @@
                                 @endif
                             </td>
 
-                            <!-- Website -->
+                            <!-- Metrics & Testimonial Badges -->
                             <td style="padding: 14px 18px;">
-                                @if($client->website_url)
-                                    <a href="{{ $client->website_url }}" target="_blank" rel="noopener noreferrer" style="color: var(--color-secondary-bright); text-decoration: none; font-size: 13px; display: inline-flex; align-items: center; gap: 4px;">
-                                        <span>Visit</span>
-                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                                            <polyline points="15 3 21 3 21 9"></polyline>
-                                            <line x1="10" y1="14" x2="21" y2="3"></line>
-                                        </svg>
-                                    </a>
-                                @else
-                                    <span style="color: var(--color-text-muted); font-size: 12px;">—</span>
-                                @endif
+                                <div style="display: flex; flex-direction: column; gap: 4px;">
+                                    @if($client->stat_1_value)
+                                        <div style="font-size: 11px; color: #4ade80;">
+                                            <strong>{{ $client->stat_1_value }}</strong> <span style="color: #9ca3af;">{{ $client->stat_1_label }}</span>
+                                        </div>
+                                    @endif
+                                    @if($client->testimonial_author)
+                                        <div style="font-size: 11px; color: #e5e7eb;">
+                                            ❝ Quote: <em>{{ Str::limit($client->testimonial_author, 20) }}</em>
+                                        </div>
+                                    @else
+                                        <span style="font-size: 11px; color: var(--color-text-muted);">No testimonial</span>
+                                    @endif
+                                </div>
                             </td>
 
                             <!-- Order -->
@@ -196,6 +213,9 @@
                             <!-- Actions -->
                             <td style="padding: 14px 18px; text-align: right;">
                                 <div style="display: inline-flex; gap: 8px;">
+                                    <a href="/api/clients/{{ $client->slug ?: $client->id }}" target="_blank" class="btn btn-secondary btn-sm" style="padding: 6px 10px; font-size: 11px; text-decoration: none; border-radius: 6px; color: #4ade80;" title="Preview JSON API">
+                                        API ↗
+                                    </a>
                                     <a href="{{ route('admin.clients.edit', $client->id) }}" class="btn btn-secondary btn-sm" style="padding: 6px 12px; font-size: 12px; text-decoration: none; border-radius: 6px;">
                                         Edit
                                     </a>

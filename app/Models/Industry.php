@@ -70,3 +70,4 @@ class Industry extends Model
         return $query->orderBy('order', 'asc')->orderBy('name', 'asc');
     }
 }
+

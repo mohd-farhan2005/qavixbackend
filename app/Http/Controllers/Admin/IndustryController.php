@@ -115,3 +115,4 @@ class IndustryController extends Controller
             ->with('success', "Industry '{$industryName}' deleted successfully!");
     }
 }
+

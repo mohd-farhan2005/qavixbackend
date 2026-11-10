@@ -57,11 +57,20 @@ class ClientController extends Controller
     }
 
     /**
-     * Get single client
+     * Get single client by ID or Slug for frontend Client Page
      */
-    public function show(int $id): JsonResponse
+    public function show(string $identifier): JsonResponse
     {
-        $client = Client::active()->with('industry:id,name,slug')->find($id);
+        $client = Client::active()
+            ->with('industry:id,name,slug')
+            ->where(function ($q) use ($identifier) {
+                if (is_numeric($identifier)) {
+                    $q->where('id', (int) $identifier)->orWhere('slug', $identifier);
+                } else {
+                    $q->where('slug', $identifier);
+                }
+            })
+            ->first();
 
         if (!$client) {
             return response()->json([
@@ -76,3 +85,4 @@ class ClientController extends Controller
         ]);
     }
 }
+

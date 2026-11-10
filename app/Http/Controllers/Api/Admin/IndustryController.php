@@ -114,3 +114,4 @@ class IndustryController extends Controller
         ]);
     }
 }
+
